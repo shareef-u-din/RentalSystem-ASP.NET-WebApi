@@ -123,7 +123,6 @@ namespace RentalSystem.BL
             }
             catch (Exception e)
             {
-
                 throw e;
             }
 

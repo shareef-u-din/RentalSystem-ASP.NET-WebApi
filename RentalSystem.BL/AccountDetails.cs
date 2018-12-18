@@ -77,7 +77,7 @@ namespace RentalSystem.BL
 
                 DataRow dataRow = ds.Tables[0].Select().First();
 
-                User user = new User
+                userModel = new UserModel
                 {
                     Id = int.Parse(dataRow["Id"].ToString()),
                     Name = dataRow["Name"].ToString(),
@@ -89,11 +89,7 @@ namespace RentalSystem.BL
                     Age = int.Parse(dataRow["Age"].ToString()),
                     PaymentId = Convert.ToInt32(dataRow["PaymentId"].ToString())
                 };
-                if (user != null)
-                {
-                    userModel = new UserModel();
-                    Mapper.Map(user, userModel);
-                }
+
             }
             catch (Exception e)
             {
