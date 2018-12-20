@@ -8,8 +8,9 @@ namespace RentalSystem.BL.Helper
 {
     public enum Role
     {
-        Admin=1,
-        Customer,
-        Vendor
+        Admin = 1,
+        Vendor,
+        Customer
+
     }
 }

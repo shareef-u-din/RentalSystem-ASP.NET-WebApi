@@ -9,27 +9,31 @@ using System.Web.Http;
 
 namespace RentalSystem.Controllers
 {
-    public class ValuesController : ApiController
+    public class VendorController : ApiController
     {
+       readonly AccountDetails account = null;
+
+        public VendorController()
+        {
+            account = new AccountDetails();
+        }
 
 
-        // GET api/values/5
+
+        // GET: api/Vendor/5
         public string Get(int id)
         {
             return "value";
         }
 
-        // POST api/values
-        public void Post([FromBody]string value)
-        {
-        }
 
-        // PUT api/values/5
+
+        // PUT: api/Vendor/5
         public void Put(int id, [FromBody]string value)
         {
         }
 
-        // DELETE api/values/5
+        // DELETE: api/Vendor/5
         public void Delete(int id)
         {
         }

@@ -63,7 +63,7 @@ namespace RentalSystem.DAL
         public int Login(UserLogin userLogin)
         {
 
-            int roleId = 0;
+            int res = 0;
             SqlConnection con = null;
             SqlCommand cmd = null;
             try
@@ -75,17 +75,10 @@ namespace RentalSystem.DAL
                     cmd.Parameters.AddWithValue("@Email", userLogin.Email);
                     cmd.Parameters.AddWithValue("@Password", userLogin.Password);
 
-                    //Add the output parameter to the command object
-                    SqlParameter outPutParameter = new SqlParameter();
-                    outPutParameter.ParameterName = "@Result";
-                    outPutParameter.SqlDbType = SqlDbType.Int;
-                    outPutParameter.Direction = ParameterDirection.Output;
-                    cmd.Parameters.Add(outPutParameter);
 
                     con.Open();
-                    cmd.ExecuteNonQuery();
+                    res=(int)cmd.ExecuteScalar();
                     con.Close();
-                    roleId = (int)outPutParameter.Value;
                 }
             }
             catch (Exception e)
@@ -93,7 +86,8 @@ namespace RentalSystem.DAL
                 throw e;
             }
 
-            return roleId;
+
+            return res;
         }
 
         public DataSet GetUser(string email)

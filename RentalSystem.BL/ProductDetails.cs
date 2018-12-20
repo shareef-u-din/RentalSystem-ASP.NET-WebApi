@@ -29,7 +29,7 @@ namespace RentalSystem.BL
             try
             {
                 ds = db.dbContext.GetData(query);
-                products = ListHelper.DataSetToList(ds);
+                products = ListHelper.DataSetToProductList(ds);
             }
             catch (Exception e)
             {
@@ -48,7 +48,7 @@ namespace RentalSystem.BL
             try
             {
                 ds = db.dbContext.GetData(query);
-                products = ListHelper.DataSetToList(ds);
+                products = ListHelper.DataSetToProductList(ds);
             }
             catch (Exception e)
             {
@@ -66,7 +66,7 @@ namespace RentalSystem.BL
             try
             {
                 ds = db.GetByCategory(categoryId);
-                products = ListHelper.DataSetToList(ds);
+                products = ListHelper.DataSetToProductList(ds);
             }
             catch (Exception e)
             {
@@ -77,6 +77,28 @@ namespace RentalSystem.BL
             return products;
         }
 
+
+        public IEnumerable<CategoryModel> GetCategories()
+        {
+            RsDbContext db = RsDbContext.Instance;
+
+            string query = "SELECT * FROM Category WITH(NOLOCK)";
+            IEnumerable<CategoryModel> categories = null;
+            DataSet ds = null;
+            try
+            {
+                ds = db.GetData(query);
+                categories = ListHelper.DataSetToCategoryList(ds);
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+
+            return categories;
+        }
+
         public IEnumerable<ProductModel> GetAllByInRange(int startPrice, int endPrice)
         {
             IEnumerable<ProductModel> products = null;
@@ -84,7 +106,7 @@ namespace RentalSystem.BL
             try
             {
                 ds = db.GetInRange(startPrice, endPrice);
-                products = ListHelper.DataSetToList(ds);
+                products = ListHelper.DataSetToProductList(ds);
             }
             catch (Exception e)
             {
@@ -102,7 +124,7 @@ namespace RentalSystem.BL
             try
             {
                 ds = db.GetByVendor(vendorId);
-                products = ListHelper.DataSetToList(ds);
+                products = ListHelper.DataSetToProductList(ds);
             }
             catch (Exception e)
             {

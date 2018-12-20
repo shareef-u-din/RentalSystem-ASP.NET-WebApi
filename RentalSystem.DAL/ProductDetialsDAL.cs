@@ -85,8 +85,8 @@ namespace RentalSystem.DAL
                     cmd.Parameters.AddWithValue("@Name", product.Name);
                     cmd.Parameters.AddWithValue("@Description", product.Description);
                     cmd.Parameters.AddWithValue("@Image1", product.Image1);
-                    cmd.Parameters.AddWithValue("@Image2", product.Image2);
-                    cmd.Parameters.AddWithValue("@Image3", product.Image3);
+                    cmd.Parameters.AddWithValue("@Image2", product.Image2==null ? "" : product.Image2);
+                    cmd.Parameters.AddWithValue("@Image3", product.Image2 == null ? "" : product.Image2);
                     cmd.Parameters.AddWithValue("@Availability", product.Availability);
                     cmd.Parameters.AddWithValue("@StartDate", product.StartDate);
                     cmd.Parameters.AddWithValue("@EndDate", product.EndDate);

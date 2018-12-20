@@ -10,7 +10,7 @@ namespace RentalSystem.BL.Helper
 {
     public static class ListHelper
     {
-        public static  IEnumerable<ProductModel> DataSetToList(DataSet ds)
+        public static  IEnumerable<ProductModel> DataSetToProductList(DataSet ds)
         {
             var list = ds.Tables[0].AsEnumerable().Select(dataRow => new ProductModel {
                 Id = int.Parse(dataRow["Id"].ToString()),
@@ -53,6 +53,16 @@ namespace RentalSystem.BL.Helper
                 Password = dataRow["Password"].ToString(),
                 Email = dataRow["Email"].ToString(),
                 RoleId = int.Parse(dataRow["RoleId"].ToString())
+            });
+            return list;
+        }
+
+        public static IEnumerable<CategoryModel> DataSetToCategoryList(DataSet ds)
+        {
+            var list = ds.Tables[0].AsEnumerable().Select(dataRow => new CategoryModel
+            {
+                Id = int.Parse(dataRow["Id"].ToString()),
+                Name = dataRow["Name"].ToString()
             });
             return list;
         }

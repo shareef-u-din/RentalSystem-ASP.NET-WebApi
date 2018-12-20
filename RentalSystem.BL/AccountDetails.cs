@@ -42,29 +42,20 @@ namespace RentalSystem.BL
         {
             UserLogin userLogin = new UserLogin();
             Mapper.Map(userLoginModel, userLogin);
-            int roleId = 0;
+            int res = 0;
             try
             {
-                roleId = db.Login(userLogin);
+                res=db.Login(userLogin);
             }
             catch (Exception e)
             {
 
                 throw e;
             }
-            if (Role.Admin.Equals(roleId))
+            if (res == 0)
             {
-                userLoginModel.RoleId = (int)Role.Admin;
+                userLoginModel = null;
             }
-            else if (Role.Customer.Equals(roleId))
-            {
-                userLoginModel.RoleId = (int)Role.Customer;
-            }
-            else if (Role.Vendor.Equals(roleId))
-            {
-                userLoginModel.RoleId = (int)Role.Vendor;
-            }
-            else { userLoginModel = null; }
             return userLoginModel;
         }
         public UserModel GetUser(string email)
