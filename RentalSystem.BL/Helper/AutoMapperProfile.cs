@@ -19,6 +19,8 @@ namespace RentalSystem.BL.Helper
             CreateMap<UserModel, User>();
             CreateMap<ProductModel, Product>();
             CreateMap<Product, ProductModel>();
+            CreateMap<RentProducts, RentProductsModel>();
+            CreateMap<RentProductsModel,RentProducts>();
         }
     }
 }

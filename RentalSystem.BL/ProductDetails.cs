@@ -21,7 +21,7 @@ namespace RentalSystem.BL
             db = new ProductDetialsDAL();
         }
 
-        public IEnumerable<ProductModel> GetAll()
+        public IEnumerable<ProductModel> GetAll(int vendorId=0)
         {
             string query = "SELECT * FROM Products WITH (NOLOCK)";
             IEnumerable<ProductModel> products = null;
@@ -40,9 +40,17 @@ namespace RentalSystem.BL
             return products;
         }
 
-        public IEnumerable<ProductModel> GetAllAvailable()
+        public IEnumerable<ProductModel> GetAllAvailable(int vendorId=0)
         {
-            string query = "SELECT * FROM Products WITH (NOLOCK) WHERE Availability = 1";
+            string query = "";
+            if (vendorId == 0)
+            {
+                query = "SELECT * FROM Products WITH (NOLOCK) WHERE Availability = 1";
+            }
+            else
+            {
+                query = "SELECT * FROM Products WITH (NOLOCK) WHERE Availability = 1 WHERE VendorId="+vendorId;
+            }
             IEnumerable<ProductModel> products = null;
             DataSet ds = null;
             try
@@ -77,6 +85,40 @@ namespace RentalSystem.BL
             return products;
         }
 
+        public ProductModel GetById(int id)
+        {
+            ProductModel prodModel = null;
+            DataSet ds = null;
+
+            try
+            {
+                ds = db.GetById(id);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    prodModel = new ProductModel
+                    {
+                        Id = int.Parse(ds.Tables[0].Rows[0]["Id"].ToString()),
+                        VendorId= int.Parse(ds.Tables[0].Rows[0]["VendorId"].ToString()),
+                        Name = ds.Tables[0].Rows[0]["Name"].ToString(),
+                        Description= ds.Tables[0].Rows[0]["Description"].ToString(),
+                        Image1 = ds.Tables[0].Rows[0]["Image1"].ToString(),
+                        Image2 = ds.Tables[0].Rows[0]["Image2"].ToString(),
+                        Image3 = ds.Tables[0].Rows[0]["Image3"].ToString(),
+                        EndDate = Convert.ToDateTime(ds.Tables[0].Rows[0]["EndDate"].ToString()),
+                        StartDate = Convert.ToDateTime(ds.Tables[0].Rows[0]["StartDate"].ToString()),
+                        Availability = Convert.ToBoolean(ds.Tables[0].Rows[0]["Availability"].ToString()),
+                        CategoryId = int.Parse(ds.Tables[0].Rows[0]["CategoryId"].ToString()),
+                        UnitPrice = Convert.ToInt32(ds.Tables[0].Rows[0]["UnitPrice"].ToString())
+                    };
+                }
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            return prodModel;
+        }
 
         public IEnumerable<CategoryModel> GetCategories()
         {
@@ -153,5 +195,7 @@ namespace RentalSystem.BL
             else
                 return null;
         }
+
+
     }
 }

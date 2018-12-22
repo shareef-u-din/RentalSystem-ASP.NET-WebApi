@@ -8,10 +8,10 @@ namespace RentalSystem.BL.Interfaces
 {
     public interface IProduct<T>
     {
-        IEnumerable<T> GetAll();
+        IEnumerable<T> GetAll(int vendorId=0);
         IEnumerable<T> GetAllByVendor(int vendorId);
         IEnumerable<T> GetAllByCategory(int categoryId);
-        IEnumerable<T> GetAllAvailable();
+        IEnumerable<T> GetAllAvailable(int vendorId=0);
         IEnumerable<T> GetAllByInRange(int startPrice,int endPrice);
         T Insert(T entity);
     }

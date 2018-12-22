@@ -45,7 +45,7 @@ namespace RentalSystem.BL
             int res = 0;
             try
             {
-                res=db.Login(userLogin);
+                res = db.Login(userLogin);
             }
             catch (Exception e)
             {
@@ -58,6 +58,8 @@ namespace RentalSystem.BL
             }
             return userLoginModel;
         }
+
+
         public UserModel GetUser(string email)
         {
             UserModel userModel = null;
@@ -87,6 +89,63 @@ namespace RentalSystem.BL
                 throw e;
             }
             return userModel;
+        }
+
+
+        public UserModel GetUser(int id)
+        {
+            UserModel userModel = null;
+            DataSet ds = null;
+
+            try
+            {
+                ds = db.GetUser(id);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    userModel = new UserModel
+                    {
+                        Id = int.Parse(ds.Tables[0].Rows[0]["Id"].ToString()),
+                        Name = ds.Tables[0].Rows[0]["Name"].ToString(),
+                        Email = ds.Tables[0].Rows[0]["Email"].ToString(),
+                        Contact = ds.Tables[0].Rows[0]["Contact"].ToString(),
+                        Address = ds.Tables[0].Rows[0]["Address"].ToString(),
+                        Photo = ds.Tables[0].Rows[0]["Photo"].ToString(),
+                        Valid = Convert.ToBoolean(ds.Tables[0].Rows[0]["Valid"].ToString()),
+                        Age = int.Parse(ds.Tables[0].Rows[0]["Age"].ToString()),
+                        PaymentId = Convert.ToInt32(ds.Tables[0].Rows[0]["PaymentId"].ToString())
+                    };
+                }
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            return userModel;
+        }
+        public UserModel UpdateUser(UserModel userModel)
+        {
+            int res = 0;
+            try
+            {
+                User user = new User();
+                Mapper.Map(userModel, user);
+                res = db.UpdateUser(user);
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            if (res == 0)
+            {
+                return null;
+            }
+            else
+            {
+                return userModel;
+            }
+
         }
 
         public IEnumerable<UserLoginModel> GetUserLogins()

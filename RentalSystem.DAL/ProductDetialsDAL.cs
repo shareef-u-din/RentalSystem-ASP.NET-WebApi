@@ -42,13 +42,16 @@ namespace RentalSystem.DAL
             }
             return ds;
         }
+
+
         public DataSet GetByVendor(int vendorId)
         {
-            DataSet ds = null;
+
             string query = "SELECT * FROM Products WITH(nolock) WHERE VendorId=@a1";
             SqlConnection con = null;
             SqlCommand cmd = null;
             SqlDataAdapter sda = null;
+            DataSet ds = new DataSet();
             try
             {
                 using (con = dbContext.Connection())
@@ -114,6 +117,38 @@ namespace RentalSystem.DAL
             {
                 return true;
             }
+        }
+
+        public DataSet GetById(int id)
+        {
+            string query = "SELECT * FROM Products WITH(NOLOCK) WHERE Id=@Id";
+            SqlConnection con = null;
+            SqlCommand cmd = null;
+            DataSet ds = null;
+            SqlDataAdapter sda = null;
+            try
+            {
+                using (con = dbContext.Connection())
+                using (cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@Id", id);
+                    ds = new DataSet();
+                    sda = new SqlDataAdapter(cmd);
+                    sda.Fill(ds);
+
+                }
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+            finally
+            {
+                if (sda != null)
+                    sda = null;
+            }
+            return ds;
         }
 
         public DataSet GetInRange(int startPrice, int endPrice)

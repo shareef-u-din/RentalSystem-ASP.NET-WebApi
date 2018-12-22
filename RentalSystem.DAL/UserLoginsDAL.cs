@@ -77,7 +77,7 @@ namespace RentalSystem.DAL
 
 
                     con.Open();
-                    res=(int)cmd.ExecuteScalar();
+                    res = (int)cmd.ExecuteScalar();
                     con.Close();
                 }
             }
@@ -100,10 +100,41 @@ namespace RentalSystem.DAL
             try
             {
                 using (con = dbContext.Connection())
-                using (cmd = new SqlCommand(query,con))
+                using (cmd = new SqlCommand(query, con))
                 {
                     cmd.Parameters.AddWithValue("@Email", email);
-                    ds= new DataSet();
+                    ds = new DataSet();
+                    sda = new SqlDataAdapter(cmd);
+                    sda.Fill(ds);
+
+                }
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+            finally
+            {
+                if (sda != null)
+                    sda = null;
+            }
+            return ds;
+        }
+        public DataSet GetUser(int Id)
+        {
+            string query = "SELECT * FROM Users WITH(NOLOCK) WHERE Id=@Id";
+            SqlConnection con = null;
+            SqlCommand cmd = null;
+            DataSet ds = null;
+            SqlDataAdapter sda = null;
+            try
+            {
+                using (con = dbContext.Connection())
+                using (cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@Id", Id);
+                    ds = new DataSet();
                     sda = new SqlDataAdapter(cmd);
                     sda.Fill(ds);
 
@@ -122,6 +153,51 @@ namespace RentalSystem.DAL
             return ds;
         }
 
+
+        public int UpdateUser(User user)
+        {
+            SqlConnection con = null;
+            SqlCommand cmd = null;
+            int result = 0;
+            try
+            {
+
+
+                using (con = dbContext.Connection())
+                using (cmd = new SqlCommand("spUpdateUser", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Id", user.Id);
+                    cmd.Parameters.AddWithValue("@Email", user.Email);
+                    cmd.Parameters.AddWithValue("@Name", user.Name);
+                    cmd.Parameters.AddWithValue("@Contact", user.Contact);
+                    cmd.Parameters.AddWithValue("@Age", user.Age);
+                    cmd.Parameters.AddWithValue("@Address", user.Address);
+                    cmd.Parameters.AddWithValue("@Payment", user.PaymentId);
+                    cmd.Parameters.AddWithValue("@Photo", user.Photo);
+
+                    //output parameter
+                    cmd.Parameters.Add("@Result", SqlDbType.Int);
+                    cmd.Parameters["@Result"].Direction = ParameterDirection.Output;
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    result= (int)cmd.Parameters["@Result"].Value;
+                    con.Close();
+
+                }
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+            finally
+            {
+                //
+            }
+            return result;
+        }
+
         public DataSet GetUserLogins()
         {
             string query = "SELECT * FROM UserLogins WITH(NOLOCK)";
@@ -133,8 +209,8 @@ namespace RentalSystem.DAL
             try
             {
                 using (con = dbContext.Connection())
-                using (cmd= new SqlCommand(query, con))
-                using (sda= new SqlDataAdapter(cmd))
+                using (cmd = new SqlCommand(query, con))
+                using (sda = new SqlDataAdapter(cmd))
                 {
                     sda.Fill(ds);
                 }

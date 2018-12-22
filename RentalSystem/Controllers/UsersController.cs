@@ -26,11 +26,11 @@ namespace RentalSystem.Controllers
             return account.GetUserLogins();
         }
 
-        // GET: api/Users/5
-        public string Get(int id)
-        {
-            return "value";
-        }
+        //// GET: api/Users/5
+        //public string Get(int id)
+        //{
+        //    return "value";
+        //}
 
         // POST: api/AddUser
         [HttpPost]
@@ -41,6 +41,29 @@ namespace RentalSystem.Controllers
             try
             {
                 user = account.Registration(userLoginModel);
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+
+            if (user != null)
+                return Request.CreateResponse(HttpStatusCode.Created);
+            else
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+
+        }
+
+        // POST: api/UpdateUser
+        [HttpPost]
+        [Route("api/Update")]
+        public HttpResponseMessage Post(UserModel userModel)
+        {
+            UserModel user = null;
+            try
+            {
+                user = account.UpdateUser(userModel);
             }
             catch (Exception e)
             {
@@ -78,9 +101,23 @@ namespace RentalSystem.Controllers
 
         }
 
-        // PUT: api/Users/5
-        public void Put(int id, [FromBody]string value)
+        // GET: api/Users/5
+        public HttpResponseMessage Get(int id)
         {
+            UserModel user = null;
+            try
+            {
+                user = account.GetUser(id);
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+            if (user != null)
+                return Request.CreateResponse(HttpStatusCode.OK,user);
+            else
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound,"User with Id="+id+" was not found");
         }
 
         // DELETE: api/Users/5
