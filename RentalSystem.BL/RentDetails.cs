@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using RentalSystem.BL.Helper;
 using RentalSystem.DAL;
 using RentalSystem.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -38,5 +40,24 @@ namespace RentalSystem.BL
             else
                 return null;
         }
+        public IEnumerable<RentProductsModel> GetAllOnRent(int vendorId)
+        {
+
+            IEnumerable<RentProductsModel> products = null;
+            DataSet ds = null;
+            try
+            {
+                ds = db.GetAllOnRent(vendorId);
+                products = ListHelper.DataSetToRentList(ds);
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+
+            return products;
+        }
+
     }
 }

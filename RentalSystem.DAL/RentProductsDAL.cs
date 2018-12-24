@@ -58,5 +58,49 @@ namespace RentalSystem.DAL
                 return true;
             }
         }
+
+
+        public DataSet GetAllOnRent(int vendorId)
+        {
+            string query = "";
+            if (vendorId == 0)
+            {
+                query = "SELECT * FROM RentProducts WITH (NOLOCK)";
+            }
+            else
+            {
+                query = "SELECT * FROM RentProducts WITH (NOLOCK) WHERE Status = 'True' AND VendorId=@Id";
+            }
+            SqlConnection con = null;
+            SqlCommand cmd = null;
+            DataSet ds = null;
+            SqlDataAdapter sda = null;
+            try
+            {
+                using (con = dbContext.Connection())
+                using (cmd = new SqlCommand(query, con))
+                {
+                    if (vendorId != 0)
+                    {
+                        cmd.Parameters.AddWithValue("@Id", vendorId);
+                    }
+                    ds = new DataSet();
+                    sda = new SqlDataAdapter(cmd);
+                    sda.Fill(ds);
+
+                }
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+            finally
+            {
+                if (sda != null)
+                    sda = null;
+            }
+            return ds;
+        }
     }
 }

@@ -42,20 +42,18 @@ namespace RentalSystem.BL
         {
             UserLogin userLogin = new UserLogin();
             Mapper.Map(userLoginModel, userLogin);
-            int res = 0;
             try
             {
-                res = db.Login(userLogin);
+                userLogin = db.Login(userLogin);
             }
             catch (Exception e)
             {
 
                 throw e;
             }
-            if (res == 0)
-            {
-                userLoginModel = null;
-            }
+            Mapper.Map(userLogin,userLoginModel);
+
+
             return userLoginModel;
         }
 

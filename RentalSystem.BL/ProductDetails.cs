@@ -49,13 +49,31 @@ namespace RentalSystem.BL
             }
             else
             {
-                query = "SELECT * FROM Products WITH (NOLOCK) WHERE Availability = 1 WHERE VendorId="+vendorId;
+                query = "SELECT * FROM Products WITH (NOLOCK) WHERE Availability = 1 AND VendorId="+vendorId;
             }
             IEnumerable<ProductModel> products = null;
             DataSet ds = null;
             try
             {
                 ds = db.dbContext.GetData(query);
+                products = ListHelper.DataSetToProductList(ds);
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+
+            return products;
+        }
+
+        public IEnumerable<ProductModel> GetAvailable()
+        {
+            IEnumerable<ProductModel> products = null;
+            DataSet ds = null;
+            try
+            {
+                ds = db.GetAvailable();
                 products = ListHelper.DataSetToProductList(ds);
             }
             catch (Exception e)

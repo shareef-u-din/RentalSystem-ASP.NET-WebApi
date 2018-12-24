@@ -60,10 +60,9 @@ namespace RentalSystem.DAL
             }
         }
 
-        public int Login(UserLogin userLogin)
+        public UserLogin Login(UserLogin userLogin)
         {
-
-            int res = 0;
+            int? res = 0;
             SqlConnection con = null;
             SqlCommand cmd = null;
             try
@@ -74,20 +73,47 @@ namespace RentalSystem.DAL
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@Email", userLogin.Email);
                     cmd.Parameters.AddWithValue("@Password", userLogin.Password);
+                    cmd.Parameters.AddWithValue("@RoleId", userLogin.RoleId);
 
+                    //Add the output parameter to the command object
+                    SqlParameter outPutParameter = new SqlParameter();
+                    outPutParameter.ParameterName = "@Result";
+                    outPutParameter.SqlDbType = SqlDbType.Int;
+                    outPutParameter.Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add(outPutParameter);
 
+                    //output parameter
+                    cmd.Parameters.Add("@Image", SqlDbType.VarChar, 150);
+                    cmd.Parameters["@Image"].Direction = ParameterDirection.Output;
                     con.Open();
-                    res = (int)cmd.ExecuteScalar();
+                    res = Convert.ToInt32(cmd.ExecuteScalar());
                     con.Close();
+                    int result = (int)outPutParameter.Value;
+                    string image = Convert.ToString(cmd.Parameters["@Image"].Value);
+                    userLogin.RoleId = result;
+                    if (image == null)
+                    {
+                        userLogin.Password = "";
+                    }
+                    else
+                    {
+                        userLogin.Password = image;
+                    }
+                    if (result == -1)
+                    {
+                        userLogin.Id = 0;
+                    }
+                    else
+                    {
+                        userLogin.Id = res??0;
+                    }
                 }
             }
             catch (Exception e)
             {
                 throw e;
             }
-
-
-            return res;
+            return userLogin;
         }
 
         public DataSet GetUser(string email)
@@ -181,7 +207,7 @@ namespace RentalSystem.DAL
                     cmd.Parameters["@Result"].Direction = ParameterDirection.Output;
                     con.Open();
                     cmd.ExecuteNonQuery();
-                    result= (int)cmd.Parameters["@Result"].Value;
+                    result = (int)cmd.Parameters["@Result"].Value;
                     con.Close();
 
                 }

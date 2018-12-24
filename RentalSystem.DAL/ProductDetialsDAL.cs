@@ -73,6 +73,35 @@ namespace RentalSystem.DAL
             }
             return ds;
         }
+
+        public DataSet GetAvailable()
+        {
+            SqlConnection con = null;
+            SqlCommand cmd = null;
+            SqlDataAdapter sda = null;
+            DataSet ds = new DataSet();
+            try
+            {
+                using (con = dbContext.Connection())
+                using (cmd = new SqlCommand("spGetAllAvailableProducts", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    sda = new SqlDataAdapter(cmd);
+                    sda.Fill(ds);
+                }
+            }
+            catch (Exception sqle)
+            {
+                throw sqle;
+            }
+            finally
+            {
+                if (sda != null)
+                    sda = null;
+            }
+            return ds;
+        }
+
         public bool Add(Product product)
         {
             SqlConnection con = null;
@@ -88,8 +117,8 @@ namespace RentalSystem.DAL
                     cmd.Parameters.AddWithValue("@Name", product.Name);
                     cmd.Parameters.AddWithValue("@Description", product.Description);
                     cmd.Parameters.AddWithValue("@Image1", product.Image1);
-                    cmd.Parameters.AddWithValue("@Image2", product.Image2==null ? "" : product.Image2);
-                    cmd.Parameters.AddWithValue("@Image3", product.Image2 == null ? "" : product.Image2);
+                    cmd.Parameters.AddWithValue("@Image2", product.Image2 == null ? "" : product.Image2);
+                    cmd.Parameters.AddWithValue("@Image3", product.Image3 == null ? "" : product.Image3);
                     cmd.Parameters.AddWithValue("@Availability", product.Availability);
                     cmd.Parameters.AddWithValue("@StartDate", product.StartDate);
                     cmd.Parameters.AddWithValue("@EndDate", product.EndDate);
@@ -180,5 +209,7 @@ namespace RentalSystem.DAL
             }
             return ds;
         }
+
+
     }
 }

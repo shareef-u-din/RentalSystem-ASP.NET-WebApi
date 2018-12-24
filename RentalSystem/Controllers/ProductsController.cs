@@ -36,6 +36,24 @@ namespace RentalSystem.Controllers
             return list;
         }
 
+        // GET: api/Products/
+        [HttpGet]
+        [Route("api/products/available")]
+        public IEnumerable<ProductModel> GetAaivalbe()
+        {
+            IEnumerable<ProductModel> list = null;
+            try
+            {
+                list = productDetails.GetAvailable();
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+            return list;
+        }
+
         // GET: api/Products/all/vendorId
         [HttpGet]
         [Route("api/products/all/{vendorId:int}")]
@@ -54,23 +72,7 @@ namespace RentalSystem.Controllers
             return list;
         }
 
-        // GET: api/Products/Rent/id
-        [HttpGet]
-        [Route("api/products/rent/{id:int}")]
-        public IEnumerable<ProductModel> GetAllOnRent(int vendorId=0)
-        {
-            IEnumerable<ProductModel> list = null;
-            try
-            {
-                list = productDetails.GetAllAvailable(vendorId);
-            }
-            catch (Exception e)
-            {
 
-                throw e;
-            }
-            return list;
-        }
 
         //GET: api/Products/GetAllCategories
         [Route("api/products/GetAllCategories")]
@@ -106,7 +108,7 @@ namespace RentalSystem.Controllers
                 throw e;
             }
             if (prod != null)
-                return Request.CreateResponse(HttpStatusCode.Created);
+                return Request.CreateResponse(HttpStatusCode.Created,prod);
             else
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
 

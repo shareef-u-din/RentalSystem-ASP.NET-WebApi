@@ -10,21 +10,42 @@ namespace RentalSystem.BL.Helper
 {
     public static class ListHelper
     {
-        public static  IEnumerable<ProductModel> DataSetToProductList(DataSet ds)
+        public static IEnumerable<ProductModel> DataSetToProductList(DataSet ds)
         {
-            var list = ds.Tables[0].AsEnumerable().Select(dataRow => new ProductModel {
+            var list = ds.Tables[0].AsEnumerable().Select(dataRow => new ProductModel
+            {
                 Id = int.Parse(dataRow["Id"].ToString()),
-                VendorId=int.Parse(dataRow["VendorId"].ToString()),
-                Name= dataRow["Name"].ToString(),
-                Description= dataRow["Description"].ToString(),
-                Image1= dataRow["Image1"].ToString(),
-                Image2= dataRow["Image2"].ToString(),
-                Image3= dataRow["Image3"].ToString(),
-                Availability=Convert.ToBoolean(dataRow["Availability"].ToString()),
-                StartDate=Convert.ToDateTime(dataRow["StartDate"].ToString()),
-                EndDate=Convert.ToDateTime(dataRow["EndDate"].ToString()),
-                CategoryId= int.Parse(dataRow["CategoryId"].ToString()),
-                UnitPrice=Convert.ToDouble(dataRow["UnitPrice"].ToString())
+                VendorId = int.Parse(dataRow["VendorId"].ToString()),
+                Name = dataRow["Name"].ToString(),
+                Description = dataRow["Description"].ToString(),
+                Image1 = dataRow["Image1"].ToString(),
+                Image2 = dataRow["Image2"].ToString(),
+                Image3 = dataRow["Image3"].ToString(),
+                Availability = Convert.ToBoolean(dataRow["Availability"].ToString()),
+                StartDate = Convert.ToDateTime(dataRow["StartDate"].ToString()),
+                EndDate = Convert.ToDateTime(dataRow["EndDate"].ToString()),
+                CategoryId = int.Parse(dataRow["CategoryId"].ToString()),
+                UnitPrice = Convert.ToDouble(dataRow["UnitPrice"].ToString())
+            });
+            return list;
+        }
+
+
+        public static IEnumerable<RentProductsModel> DataSetToRentList(DataSet ds)
+        {
+            var list = ds.Tables[0].AsEnumerable().Select(dataRow => new RentProductsModel
+            {
+                Id = int.Parse(dataRow["Id"].ToString()),
+                VendorId = int.Parse(dataRow["VendorId"].ToString()),
+                Email = dataRow["Email"].ToString(),
+                ProductId = Convert.ToInt32(dataRow["ProductId"].ToString()),
+                Payment = Convert.ToBoolean(dataRow["Payment"].ToString()),
+                Status = Convert.ToBoolean(dataRow["Status"].ToString()),
+                TotalCost = Convert.ToDouble(dataRow["TotalCost"].ToString()),
+                StartDate = Convert.ToDateTime(dataRow["StartDate"].ToString()),
+                EndDate = Convert.ToDateTime(dataRow["EndDate"].ToString()),
+                CategoryId = int.Parse(dataRow["CategoryId"].ToString()),
+                UnitCost = Convert.ToDouble(dataRow["UnitCost"].ToString())
             });
             return list;
         }

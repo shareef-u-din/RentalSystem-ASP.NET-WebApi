@@ -49,7 +49,7 @@ namespace RentalSystem.Controllers
             }
 
             if (user != null)
-                return Request.CreateResponse(HttpStatusCode.Created);
+                return Request.CreateResponse(HttpStatusCode.Created,user);
             else
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
 
@@ -72,7 +72,7 @@ namespace RentalSystem.Controllers
             }
 
             if (user != null)
-                return Request.CreateResponse(HttpStatusCode.Created);
+                return Request.CreateResponse(HttpStatusCode.Created,user);
             else
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
 
@@ -95,7 +95,7 @@ namespace RentalSystem.Controllers
             }
 
             if (user != null)
-                return Request.CreateResponse(HttpStatusCode.OK);
+                return Request.CreateResponse(HttpStatusCode.OK,user);
             else
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
 

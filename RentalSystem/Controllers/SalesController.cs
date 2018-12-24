@@ -11,10 +11,10 @@ namespace RentalSystem.Controllers
 {
     public class SalesController : ApiController
     {
-        RentDetails rd = null;
+        RentDetails rentDetails = null;
         public SalesController()
         {
-            rd = new RentDetails();
+            rentDetails = new RentDetails();
         }
         // GET: api/Sales
         public IEnumerable<string> Get()
@@ -34,7 +34,7 @@ namespace RentalSystem.Controllers
             RentProductsModel product = null;
             try
             {
-                product = rd.Insert(prod);
+                product = rentDetails.Insert(prod);
             }
             catch (Exception e)
             {
@@ -55,6 +55,24 @@ namespace RentalSystem.Controllers
         // DELETE: api/Sales/5
         public void Delete(int id)
         {
+        }
+
+        // GET: api/Sales/Rent/vendorId
+        [HttpGet]
+        [Route("api/sales/rent/{vendorId?}")]
+        public IEnumerable<RentProductsModel> GetAllOnRent(int vendorId = 0)
+        {
+            IEnumerable<RentProductsModel> list = null;
+            try
+            {
+                list = rentDetails.GetAllOnRent(vendorId);
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+            return list;
         }
     }
 }
