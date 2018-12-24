@@ -20,22 +20,39 @@ namespace RentalSystem.Controllers
 
 
 
-        // GET: api/Vendor/5
-        public string Get(int id)
+        // GET: api/Vendor
+        [Route("api/vendors")]
+        public IEnumerable<UserModel> Get()
         {
-            return "value";
+            IEnumerable<UserModel> list = null;
+            try
+            {
+                list = account.GetAllVendors();
+            }
+            catch (Exception e)
+            {
+                string mes = "************API LOGS**************\n";
+                Log.Fatal(mes + " Exception in VendorController in Get(api/vendors) Method", e);
+            }
+            return list;
+        }
+        // GET: api/Customer
+        [Route("api/customers")]
+        public IEnumerable<UserModel> GetCustomers()
+        {
+            IEnumerable<UserModel> list = null;
+            try
+            {
+                list = account.GetAllCustomers();
+            }
+            catch (Exception e)
+            {
+                string mes = "************API LOGS**************\n";
+                Log.Fatal(mes + " Exception in VendorController in GetCustomers(api/customers) Method", e);
+            }
+            return list;
         }
 
 
-
-        // PUT: api/Vendor/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE: api/Vendor/5
-        public void Delete(int id)
-        {
-        }
     }
 }

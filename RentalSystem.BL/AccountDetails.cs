@@ -38,6 +38,47 @@ namespace RentalSystem.BL
             else
                 return null;
         }
+
+        public IEnumerable<UserModel> GetAllVendors()
+        {
+           IEnumerable<UserModel> list = null;
+            DataSet ds = null;
+
+            try
+            {
+                ds = db.GetAllVendors();
+                list = ListHelper.DataSetToUserList(ds);
+
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return list;
+        }
+
+        public IEnumerable<UserModel> GetAllCustomers()
+        {
+            IEnumerable<UserModel> list = null;
+            DataSet ds = null;
+
+            try
+            {
+                ds = db.GetAllCustomers();
+                list = ListHelper.DataSetToUserList(ds);
+
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return list;
+        }
+
         public UserLoginModel Login(UserLoginModel userLoginModel)
         {
             UserLogin userLogin = new UserLogin();

@@ -11,22 +11,12 @@ namespace RentalSystem.Controllers
 {
     public class SalesController : ApiController
     {
-        RentDetails rentDetails = null;
+        readonly RentDetails rentDetails = null;
         public SalesController()
         {
             rentDetails = new RentDetails();
         }
-        // GET: api/Sales
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
 
-        // GET: api/Sales/5
-        public string Get(int id)
-        {
-            return "value";
-        }
 
         // POST: api/Sales
         public HttpResponseMessage Post(RentProductsModel prod)
@@ -38,7 +28,8 @@ namespace RentalSystem.Controllers
             }
             catch (Exception e)
             {
-                throw e;
+                string mes = "************API LOGS**************\n";
+                Log.Fatal(mes + " Exception in SalesController in POST:api/sales Method", e);
             }
             if (product != null)
                 return Request.CreateResponse(HttpStatusCode.Created, product);
@@ -69,8 +60,8 @@ namespace RentalSystem.Controllers
             }
             catch (Exception e)
             {
-
-                throw e;
+                string mes = "************API LOGS**************\n";
+                Log.Fatal(mes + " Exception in SalesController in POST:api/sales/rent/vendorId Method", e);
             }
             return list;
         }

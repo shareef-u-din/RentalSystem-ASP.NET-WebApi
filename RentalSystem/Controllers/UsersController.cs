@@ -23,7 +23,17 @@ namespace RentalSystem.Controllers
         [Route("api/users")]
         public IEnumerable<UserLoginModel> Get()
         {
-            return account.GetUserLogins();
+            IEnumerable<UserLoginModel> list = null;
+            try
+            {
+                list = account.GetUserLogins();
+            }
+            catch (Exception e)
+            {
+                string mes = "************API LOGS**************\n";
+                Log.Fatal(mes + " Exception in UsersController in Get(api/users) Method", e);
+            }
+            return list;
         }
 
         //// GET: api/Users/5
@@ -44,8 +54,8 @@ namespace RentalSystem.Controllers
             }
             catch (Exception e)
             {
-
-                throw e;
+                string mes = "************API LOGS**************\n";
+                Log.Fatal(mes + " Exception in UsersController in POST:api/adduser Method", e);
             }
 
             if (user != null)
@@ -67,8 +77,8 @@ namespace RentalSystem.Controllers
             }
             catch (Exception e)
             {
-
-                throw e;
+                string mes = "************API LOGS**************\n";
+                Log.Fatal(mes + " Exception in UsersController in POST:api/update Method", e);
             }
 
             if (user != null)
@@ -90,8 +100,8 @@ namespace RentalSystem.Controllers
             }
             catch (Exception e)
             {
-
-                throw e;
+                string mes = "************API LOGS**************\n";
+                Log.Fatal(mes + " Exception in UsersController in Login Method", e);
             }
 
             if (user != null)
@@ -111,8 +121,8 @@ namespace RentalSystem.Controllers
             }
             catch (Exception e)
             {
-
-                throw e;
+                string mes = "************API LOGS**************\n";
+                Log.Fatal(mes + " Exception in UsersController in api/users/id Method", e);
             }
             if (user != null)
                 return Request.CreateResponse(HttpStatusCode.OK,user);

@@ -15,6 +15,7 @@ namespace RentalSystem
         protected void Application_Start()
         {
             AutoMapper.Mapper.Initialize(cfg => cfg.AddProfile<AutoMapperProfile>());
+            log4net.Config.XmlConfigurator.Configure();
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

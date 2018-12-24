@@ -60,6 +60,68 @@ namespace RentalSystem.DAL
             }
         }
 
+        public DataSet GetAllCustomers()
+        {
+            SqlConnection con = null;
+            SqlCommand cmd = null;
+            DataSet ds = null;
+            SqlDataAdapter sda = null;
+            try
+            {
+                using (con = dbContext.Connection())
+                using (cmd = new SqlCommand("spGetAllCustomers", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    ds = new DataSet();
+                    sda = new SqlDataAdapter(cmd);
+                    sda.Fill(ds);
+
+                }
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+            finally
+            {
+                if (sda != null)
+                    sda = null;
+            }
+            return ds;
+        }
+
+        public DataSet GetAllVendors()
+        {
+            SqlConnection con = null;
+            SqlCommand cmd = null;
+            DataSet ds = null;
+            SqlDataAdapter sda = null;
+            try
+            {
+                using (con = dbContext.Connection())
+                using (cmd = new SqlCommand("spGetAllVendors", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    ds = new DataSet();
+                    sda = new SqlDataAdapter(cmd);
+                    sda.Fill(ds);
+
+                }
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+            finally
+            {
+                if (sda != null)
+                    sda = null;
+            }
+            return ds;
+        }
+
         public UserLogin Login(UserLogin userLogin)
         {
             int? res = 0;

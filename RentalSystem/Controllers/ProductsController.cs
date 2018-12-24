@@ -30,8 +30,8 @@ namespace RentalSystem.Controllers
             }
             catch (Exception e)
             {
-
-                throw e;
+                string mes = "************API LOGS**************\n";
+                Log.Fatal(mes + " Exception in ProductsController in GetAll Method", e);
             }
             return list;
         }
@@ -48,8 +48,8 @@ namespace RentalSystem.Controllers
             }
             catch (Exception e)
             {
-
-                throw e;
+                string mes = "************API LOGS**************\n";
+                Log.Fatal(mes + " Exception in ProductsController in GetAaivalbe Method", e);
             }
             return list;
         }
@@ -66,8 +66,8 @@ namespace RentalSystem.Controllers
             }
             catch (Exception e)
             {
-
-                throw e;
+                string mes = "************API LOGS**************\n";
+                Log.Fatal(mes + " Exception in ProductsController in GetAllByVendor Method", e);
             }
             return list;
         }
@@ -86,8 +86,8 @@ namespace RentalSystem.Controllers
             }
             catch (Exception e)
             {
-
-                throw e;
+                string mes = "************API LOGS**************\n";
+                Log.Fatal(mes + " Exception in ProductsController in GetAllCategories Method", e);
             }
             return list;
         }
@@ -105,7 +105,8 @@ namespace RentalSystem.Controllers
             }
             catch (Exception e)
             {
-                throw e;
+                string mes = "************API LOGS**************\n";
+                Log.Fatal(mes + " Exception in ProductsController in POST:api/products Method", e);
             }
             if (prod != null)
                 return Request.CreateResponse(HttpStatusCode.Created,prod);
@@ -125,7 +126,8 @@ namespace RentalSystem.Controllers
             }
             catch (Exception e)
             {
-                throw e;
+                string mes = "************API LOGS**************\n";
+                Log.Fatal(mes + " Exception in ProductsController in POST:api/products/id Method", e);
             }
             if (prod != null)
                 return Request.CreateResponse(HttpStatusCode.OK,prod);

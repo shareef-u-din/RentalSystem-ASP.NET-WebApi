@@ -55,14 +55,14 @@ namespace RentalSystem.BL.Helper
             var list = ds.Tables[0].AsEnumerable().Select(dataRow => new UserModel
             {
                 Id = int.Parse(dataRow["Id"].ToString()),
-                Name = dataRow["Name"].ToString(),
+                Name = Convert.ToString(dataRow["Name"]),
                 Email = dataRow["Email"].ToString(),
-                Contact = dataRow["Contact"].ToString(),
-                Address = dataRow["Address"].ToString(),
-                Photo = dataRow["Photo"].ToString(),
-                Valid = Convert.ToBoolean(dataRow["Valid"].ToString()),
-                Age = int.Parse(dataRow["Age"].ToString()),
-                PaymentId = Convert.ToInt32(dataRow["PaymentId"].ToString())
+                Contact = Convert.ToString(dataRow["Contact"]),
+                Address = Convert.ToString(dataRow["Address"]),
+                Photo = Convert.ToString(dataRow["Photo"]),
+                Valid = Convert.ToBoolean(dataRow["Valid"]),
+                Age = dataRow["Age"] is DBNull?0: Convert.ToInt32(dataRow["Age"]),
+                PaymentId = dataRow["PaymentId"] is DBNull ? 0 : Convert.ToInt32(dataRow["PaymentId"])
             });
             return list;
         }
