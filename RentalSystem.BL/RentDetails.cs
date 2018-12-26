@@ -60,6 +60,25 @@ namespace RentalSystem.BL
             return products;
         }
 
+        public IEnumerable<RentProductsModel> GetAllOnRent(string email)
+        {
+
+            IEnumerable<RentProductsModel> products = null;
+            DataSet ds = null;
+            try
+            {
+                ds = db.GetAllOnRent(email);
+                products = ListHelper.DataSetToRentList(ds);
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+
+            return products;
+        }
+
         public int CheckDate(DateTime date, int productId,int value)
         {
             int res = 0;

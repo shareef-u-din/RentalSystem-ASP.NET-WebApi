@@ -13,6 +13,11 @@ namespace RentalSystem.BL.Interfaces
         /// </summary>
         /// <param name="vendorId">The Id of the vendor</param>
         IEnumerable<T> GetAllOnRent(int vendorId);
+        /// <summary>
+        /// Used to get all the products  currently on rent for customer
+        /// </summary>
+        /// <param name="email">The Id of the vendor</param>
+        IEnumerable<T> GetAllOnRent(string email);
 
         /// <summary>
         /// Used to set the product on rent for customer

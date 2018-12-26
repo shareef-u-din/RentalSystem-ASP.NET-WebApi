@@ -85,5 +85,23 @@ namespace RentalSystem.Controllers
             }
             return list;
         }
+
+        // GET: api/Sales/Rent/vendorId
+        [HttpGet]
+        [Route("api/sales/rent/")]
+        public IEnumerable<RentProductsModel> GetAllOnRent(string email)
+        {
+            IEnumerable<RentProductsModel> list = null;
+            try
+            {
+                list = rentDetails.GetAllOnRent(email);
+            }
+            catch (Exception e)
+            {
+                string mes = "************API LOGS**************\n";
+                Log.Fatal(mes + " Exception in SalesController in POST:api/sales/rent/vendorId Method", e);
+            }
+            return list;
+        }
     }
 }
