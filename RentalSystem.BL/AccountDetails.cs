@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using RentalSystem.BL.Helper;
+using RentalSystem.BL.Interfaces;
 using RentalSystem.DAL;
 using RentalSystem.Models;
 using System;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace RentalSystem.BL
 {
-    public class AccountDetails
+    public class AccountDetails : IAccount
     {
         private UserLoginsDAL db = null;
 

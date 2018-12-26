@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace RentalSystem
 {
@@ -28,6 +29,8 @@ namespace RentalSystem
 
             config.Formatters.Remove(config.Formatters.XmlFormatter);
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
+            //EnableCorsAttribute cors = new EnableCorsAttribute("http://localhost:60357", "*", "*");
+            //config.EnableCors(cors);
         }
     }
 }

@@ -19,6 +19,7 @@ namespace RentalSystem.BL
         public ProductDetails()
         {
             db = new ProductDetialsDAL();
+
         }
 
         public IEnumerable<ProductModel> GetAll(int vendorId=0)
@@ -214,6 +215,24 @@ namespace RentalSystem.BL
                 return null;
         }
 
+        public ProductModel Update(ProductModel productModel)
+        {
+            Product product = new Product();
+            bool status = false;
+            try
+            {
+                product = Mapper.Map(productModel, product);
+                status = db.Update(product);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
 
+            if (status)
+                return productModel;
+            else
+                return null;
+        }
     }
 }

@@ -148,6 +148,53 @@ namespace RentalSystem.DAL
             }
         }
 
+        public bool Update(Product product)
+        {
+            SqlConnection con = null;
+            SqlCommand cmd = null;
+            int rowsUpdated = 0;
+            try
+            {
+                using (con = dbContext.Connection())
+                using (cmd = new SqlCommand("spUpdateProduct", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Id", product.Id);
+                    cmd.Parameters.AddWithValue("@VendorId", product.VendorId);
+                    cmd.Parameters.AddWithValue("@Name", product.Name);
+                    cmd.Parameters.AddWithValue("@Description", product.Description);
+                    cmd.Parameters.AddWithValue("@Image1", product.Image1);
+                    cmd.Parameters.AddWithValue("@Image2", product.Image2 == null ? "" : product.Image2);
+                    cmd.Parameters.AddWithValue("@Image3", product.Image3 == null ? "" : product.Image3);
+                    cmd.Parameters.AddWithValue("@Availability", product.Availability);
+                    cmd.Parameters.AddWithValue("@StartDate", product.StartDate);
+                    cmd.Parameters.AddWithValue("@EndDate", product.EndDate);
+                    cmd.Parameters.AddWithValue("@CategoryId", product.CategoryId);
+                    cmd.Parameters.AddWithValue("@UnitPrice", product.UnitPrice);
+                    con.Open();
+                    rowsUpdated = cmd.ExecuteNonQuery();
+                    con.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            finally
+            {
+                if (con.State == ConnectionState.Open)
+                    con.Close();
+            }
+            if (rowsUpdated == 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
         public DataSet GetById(int id)
         {
             string query = "SELECT * FROM Products WITH(NOLOCK) WHERE Id=@Id";

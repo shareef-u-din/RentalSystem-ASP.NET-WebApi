@@ -1,4 +1,5 @@
 ﻿using RentalSystem.BL;
+using RentalSystem.BL.Interfaces;
 using RentalSystem.Models;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace RentalSystem.Controllers
 {
     public class UsersController : ApiController
     {
-        AccountDetails account = null;
+        readonly IAccount account = null;
 
         public UsersController()
         {

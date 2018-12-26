@@ -59,6 +59,33 @@ namespace RentalSystem.DAL
             }
         }
 
+        public int CheckDate(DateTime date, int productId, int value)
+        {
+            int res = -1;
+            SqlConnection con = null;
+            SqlCommand cmd = null;
+            try
+            {
+                using (con = dbContext.Connection())
+                using (cmd = new SqlCommand("spCheckDate", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@date", date);
+                    cmd.Parameters.AddWithValue("@productId", productId);
+                    cmd.Parameters.AddWithValue("@value", value);
+                    con.Open();
+                    res = (int)cmd.ExecuteScalar();
+                    con.Close();
+                }
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+
+            return res;
+        }
 
         public DataSet GetAllOnRent(int vendorId)
         {

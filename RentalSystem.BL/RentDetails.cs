@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using RentalSystem.BL.Helper;
+using RentalSystem.BL.Interfaces;
 using RentalSystem.DAL;
 using RentalSystem.Models;
 using System;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace RentalSystem.BL
 {
-    public class RentDetails
+    public class RentDetails : IRent<RentProductsModel>
     {
         private RentProductsDAL db = null;
 
@@ -57,6 +58,21 @@ namespace RentalSystem.BL
             }
 
             return products;
+        }
+
+        public int CheckDate(DateTime date, int productId,int value)
+        {
+            int res = 0;
+            try
+            {
+                res = db.CheckDate(date, productId,value);
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+            return res;
         }
 
     }

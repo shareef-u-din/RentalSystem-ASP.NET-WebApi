@@ -1,4 +1,5 @@
 ﻿using RentalSystem.BL;
+using RentalSystem.BL.Interfaces;
 using RentalSystem.Models;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace RentalSystem.Controllers
 {
     public class SalesController : ApiController
     {
-        readonly RentDetails rentDetails = null;
+        readonly IRent<RentProductsModel> rentDetails = null;
         public SalesController()
         {
             rentDetails = new RentDetails();
@@ -34,13 +35,32 @@ namespace RentalSystem.Controllers
             if (product != null)
                 return Request.CreateResponse(HttpStatusCode.Created, product);
             else
-                return Request.CreateResponse(HttpStatusCode.BadRequest,"Error");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "Error");
 
         }
 
-        // PUT: api/Sales/5
-        public void Put(int id, [FromBody]string value)
+        // PUT: api/Sales/CheckDate
+        [HttpPost]
+        [Route("api/sales/CheckDate")]
+        public HttpResponseMessage CheckDate(DateViewModel dvm)
         {
+            int rValue = 0;
+
+            try
+            {
+                rValue = rentDetails.CheckDate(dvm.date, dvm.ProductId, dvm.Value);
+            }
+            catch (Exception e)
+            {
+                string mes = "************API LOGS**************\n";
+                Log.Fatal(mes + " Exception in SalesController in POST:api/sales Method", e);
+            }
+
+            if (rValue > 0)
+                return Request.CreateResponse(HttpStatusCode.OK, 1);
+            else
+                return Request.CreateResponse(HttpStatusCode.BadRequest, 0);
+
         }
 
         // DELETE: api/Sales/5

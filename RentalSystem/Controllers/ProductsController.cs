@@ -1,8 +1,8 @@
 ﻿using RentalSystem.BL;
+using RentalSystem.BL.Interfaces;
 using RentalSystem.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -11,7 +11,7 @@ namespace RentalSystem.Controllers
 {
     public class ProductsController : ApiController
     {
-        ProductDetails productDetails = null;
+        readonly IProduct<ProductModel> productDetails = null;
 
         public ProductsController()
         {
@@ -137,8 +137,24 @@ namespace RentalSystem.Controllers
         }
 
         // PUT: api/Products/5
-        public void Put(int id, [FromBody]string value)
+        [HttpPost]
+        [Route("api/products/update")]
+        public HttpResponseMessage Update(ProductModel productModel)
         {
+            ProductModel prod = null;
+            try
+            {
+                prod = productDetails.Update(productModel);
+            }
+            catch (Exception e)
+            {
+                string mes = "************API LOGS**************\n";
+                Log.Fatal(mes + " Exception in ProductsController in POST:api/products Method", e);
+            }
+            if (prod != null)
+                return Request.CreateResponse(HttpStatusCode.Created, prod);
+            else
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
         }
 
         // DELETE: api/Products/5
