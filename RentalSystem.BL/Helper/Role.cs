@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace RentalSystem.BL.Helper
 {
+
+    /// <summary>
+    /// Enum to represent Role
+    /// </summary>
     public enum Role
     {
         Admin = 1,

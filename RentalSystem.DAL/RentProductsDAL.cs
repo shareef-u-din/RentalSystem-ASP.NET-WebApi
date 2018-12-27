@@ -87,6 +87,68 @@ namespace RentalSystem.DAL
             return res;
         }
 
+        public int Approve(int productId)
+        {
+            SqlConnection con = null;
+            SqlCommand cmd = null;
+            int res = 0;
+            try
+            {
+                using (con = dbContext.Connection())
+                using (cmd = new SqlCommand("spApprove", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Id", productId);
+                    //output parameter
+                    cmd.Parameters.Add("@Result", SqlDbType.VarChar, 150);
+                    cmd.Parameters["@Result"].Direction = ParameterDirection.Output;
+                    con.Open();
+                     cmd.ExecuteNonQuery();
+                    con.Close();
+                    res = (int)cmd.Parameters["@Result"].Value;
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            return res;
+        }
+
+        public DataSet GetAllOnRentUnApproved(string email)
+        {
+            string eml = email.Substring(1, email.Length - 2);
+            string query = "SELECT * FROM RentProducts WITH (NOLOCK) WHERE Status = 'False' AND Email=@Email";
+
+            SqlConnection con = null;
+            SqlCommand cmd = null;
+            DataSet ds = null;
+            SqlDataAdapter sda = null;
+            try
+            {
+                using (con = dbContext.Connection())
+                using (cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@Email", eml);
+                    ds = new DataSet();
+                    sda = new SqlDataAdapter(cmd);
+                    sda.Fill(ds);
+
+                }
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+            finally
+            {
+                if (sda != null)
+                    sda = null;
+            }
+            return ds;
+        }
+
         public DataSet GetAllOnRent(int vendorId)
         {
             string query = "";
@@ -97,6 +159,49 @@ namespace RentalSystem.DAL
             else
             {
                 query = "SELECT * FROM RentProducts WITH (NOLOCK) WHERE Status = 'True' AND VendorId=@Id";
+            }
+            SqlConnection con = null;
+            SqlCommand cmd = null;
+            DataSet ds = null;
+            SqlDataAdapter sda = null;
+            try
+            {
+                using (con = dbContext.Connection())
+                using (cmd = new SqlCommand(query, con))
+                {
+                    if (vendorId != 0)
+                    {
+                        cmd.Parameters.AddWithValue("@Id", vendorId);
+                    }
+                    ds = new DataSet();
+                    sda = new SqlDataAdapter(cmd);
+                    sda.Fill(ds);
+
+                }
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+            finally
+            {
+                if (sda != null)
+                    sda = null;
+            }
+            return ds;
+        }
+
+        public DataSet GetAllOnRentUnApproved(int vendorId)
+        {
+            string query = "";
+            if (vendorId == 0)
+            {
+                query = "SELECT * FROM RentProducts WITH (NOLOCK)";
+            }
+            else
+            {
+                query = "SELECT * FROM RentProducts WITH (NOLOCK) WHERE Status = 'False' AND VendorId=@Id";
             }
             SqlConnection con = null;
             SqlCommand cmd = null;

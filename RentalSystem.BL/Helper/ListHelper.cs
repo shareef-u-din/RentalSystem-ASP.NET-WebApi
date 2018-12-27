@@ -10,6 +10,10 @@ namespace RentalSystem.BL.Helper
 {
     public static class ListHelper
     {
+        /// <summary>
+        /// Used to convert DataSet to ProductModel List
+        /// </summary>
+        /// <param name="dataSet">The object of type DataSet</param>
         public static IEnumerable<ProductModel> DataSetToProductList(DataSet ds)
         {
             IEnumerable<ProductModel> list = null;
@@ -40,6 +44,10 @@ namespace RentalSystem.BL.Helper
         }
 
 
+        /// <summary>
+        /// Used to convert DataSet to RentProductsModel List
+        /// </summary>
+        /// <param name="dataSet">The object of type DataSet</param>
         public static IEnumerable<RentProductsModel> DataSetToRentList(DataSet ds)
         {
             IEnumerable<RentProductsModel> list = null;
@@ -68,6 +76,11 @@ namespace RentalSystem.BL.Helper
             return list;
         }
 
+
+        /// <summary>
+        /// Used to convert DataSet to UserModel List
+        /// </summary>
+        /// <param name="dataSet">The object of type DataSet</param>
         public static IEnumerable<UserModel> DataSetToUserList(DataSet ds)
         {
             IEnumerable<UserModel> list = null;
@@ -93,6 +106,11 @@ namespace RentalSystem.BL.Helper
             }
             return list;
         }
+
+        /// <summary>
+        /// Used to convert DataSet to UserLoginModel List
+        /// </summary>
+        /// <param name="dataSet">The object of type DataSet</param>
         public static IEnumerable<UserLoginModel> DataSetToUserLogins(DataSet ds)
         {
             IEnumerable<UserLoginModel> list = null;
@@ -114,6 +132,11 @@ namespace RentalSystem.BL.Helper
             return list;
         }
 
+
+        /// <summary>
+        /// Used to convert DataSet to Category List
+        /// </summary>
+        /// <param name="dataSet">The object of type DataSet</param>
         public static IEnumerable<CategoryModel> DataSetToCategoryList(DataSet ds)
         {
             IEnumerable<CategoryModel> list = null;

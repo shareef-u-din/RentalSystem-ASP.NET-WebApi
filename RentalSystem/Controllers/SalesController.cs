@@ -86,6 +86,43 @@ namespace RentalSystem.Controllers
             return list;
         }
 
+        [HttpGet]
+        [Route("api/sales/rent/unapproved/{vendorId?}")]
+        public IEnumerable<RentProductsModel> GetAllOnRentUnApproved(int vendorId)
+        {
+            IEnumerable<RentProductsModel> list = null;
+            try
+            {
+                list = rentDetails.GetAllOnRentUnApproved(vendorId);
+            }
+            catch (Exception e)
+            {
+                string mes = "************API LOGS**************\n";
+                Log.Fatal(mes + " Exception in SalesController in POST:api/sales/rent/vendorId Method", e);
+            }
+            return list;
+        }
+
+        [HttpGet]
+        [Route("api/sales/rent/approve/{productId?}")]
+        public HttpResponseMessage Approve(int productId)
+        {
+            int res = 0;
+            try
+            {
+                res = rentDetails.Approve(productId);
+            }
+            catch (Exception e)
+            {
+                string mes = "************API LOGS**************\n";
+                Log.Fatal(mes + " Exception in SalesController in POST:api/sales/rent/unapproved/productId Method", e);
+            }
+            if (res >= 0)
+                return Request.CreateResponse(HttpStatusCode.OK, 1);
+            else
+                return Request.CreateResponse(HttpStatusCode.BadRequest, 0);
+        }
+
         // GET: api/Sales/Rent/vendorId
         [HttpGet]
         [Route("api/sales/rent/")]
@@ -95,6 +132,24 @@ namespace RentalSystem.Controllers
             try
             {
                 list = rentDetails.GetAllOnRent(email);
+            }
+            catch (Exception e)
+            {
+                string mes = "************API LOGS**************\n";
+                Log.Fatal(mes + " Exception in SalesController in POST:api/sales/rent/vendorId Method", e);
+            }
+            return list;
+        }
+
+        // GET: api/Sales/Rent/vendorId
+        [HttpGet]
+        [Route("api/sales/rent/approve")]
+        public IEnumerable<RentProductsModel> GetAllUnApproved(string email)
+        {
+            IEnumerable<RentProductsModel> list = null;
+            try
+            {
+                list = rentDetails.GetAllUnApproved(email);
             }
             catch (Exception e)
             {

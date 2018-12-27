@@ -22,6 +22,10 @@ namespace RentalSystem.BL
 
         }
 
+        /// <summary>
+        /// Used to get all the products of given vendor id or the products of all vendors if Id is not passed
+        /// </summary>
+        /// <param name="vendorId">The optional int parameter for vendorid</param>
         public IEnumerable<ProductModel> GetAll(int vendorId=0)
         {
             string query = "SELECT * FROM Products WITH (NOLOCK)";
@@ -34,13 +38,16 @@ namespace RentalSystem.BL
             }
             catch (Exception e)
             {
-
-                throw e;
+                Log.Fatal("BL : Exception in GetAll(vendorId) Method inside ProductDetails class", e);
             }
 
             return products;
         }
 
+        /// <summary>
+        /// Used to get all the available products of given vendorId
+        /// </summary>
+        /// <param name="vendorId">The int parameter for vendorId</param>
         public IEnumerable<ProductModel> GetAllAvailable(int vendorId=0)
         {
             string query = "";
@@ -62,12 +69,15 @@ namespace RentalSystem.BL
             catch (Exception e)
             {
 
-                throw e;
+                Log.Fatal("BL : Exception in GetAllAvailable Method inside ProductDetails class", e);
             }
 
             return products;
         }
 
+        /// <summary>
+        /// Used to get all available products
+        /// </summary>
         public IEnumerable<ProductModel> GetAvailable()
         {
             IEnumerable<ProductModel> products = null;
@@ -80,12 +90,17 @@ namespace RentalSystem.BL
             catch (Exception e)
             {
 
-                throw e;
+                Log.Fatal("BL : Exception in GetAvailable Method inside ProductDetails class", e);
             }
 
             return products;
         }
 
+
+        /// <summary>
+        /// Used to get all the products of given categoryId
+        /// </summary>
+        /// <param name="categoryId">The int parameter for categoryId</param>
         public IEnumerable<ProductModel> GetAllByCategory(int categoryId)
         {
             IEnumerable<ProductModel> products = null;
@@ -98,12 +113,17 @@ namespace RentalSystem.BL
             catch (Exception e)
             {
 
-                throw e;
+                Log.Fatal("BL : Exception in GetAllByCategory Method inside ProductDetails class", e);
             }
 
             return products;
         }
 
+
+        /// <summary>
+        /// Used to get the product by product Id
+        /// </summary>
+        /// <param name="ProductId">The int parameter for ProductId</param>
         public ProductModel GetById(int id)
         {
             ProductModel prodModel = null;
@@ -134,11 +154,14 @@ namespace RentalSystem.BL
             }
             catch (Exception e)
             {
-                throw e;
+                Log.Fatal("BL : Exception in GetById Method inside ProductDetails class", e);
             }
             return prodModel;
         }
 
+        /// <summary>
+        /// Used to get all the available Categories
+        /// </summary>
         public IEnumerable<CategoryModel> GetCategories()
         {
             RsDbContext db = RsDbContext.Instance;
@@ -154,12 +177,17 @@ namespace RentalSystem.BL
             catch (Exception e)
             {
 
-                throw e;
+                Log.Fatal("BL : Exception in GetCategories Method inside ProductDetails class", e);
             }
 
             return categories;
         }
 
+        /// <summary>
+        /// Used to get all the available products with unitprice between startPrice and endPrice
+        /// </summary>
+        /// <param name="startPrice">The int parameter for startPrice</param>
+        /// <param name="endPrice">The int parameter for endPrice</param>
         public IEnumerable<ProductModel> GetAllByInRange(int startPrice, int endPrice)
         {
             IEnumerable<ProductModel> products = null;
@@ -171,13 +199,16 @@ namespace RentalSystem.BL
             }
             catch (Exception e)
             {
-
-                throw e;
+                Log.Fatal("BL : Exception in GetAllInRange Method inside ProductDetails class", e);
             }
 
             return products;
         }
 
+        /// <summary>
+        /// Used to get all the products of given vendor id
+        /// </summary>
+        /// <param name="vendorId">The int parameter for vendorid</param>
         public IEnumerable<ProductModel> GetAllByVendor(int vendorId)
         {
             IEnumerable<ProductModel> products = null;
@@ -189,12 +220,16 @@ namespace RentalSystem.BL
             }
             catch (Exception e)
             {
-                throw e;
+                Log.Fatal("BL : Exception in GetAllByVendor Method inside ProductDetails class", e);
             }
 
             return products;
         }
 
+        /// <summary>
+        /// Used to insert product into database
+        /// </summary>
+        /// <param name="object">The ProductModel object as parameter</param>
         public ProductModel Insert(ProductModel entity)
         {
             Product product = new Product();
@@ -206,7 +241,7 @@ namespace RentalSystem.BL
             }
             catch (Exception e)
             {
-                throw e;
+                Log.Fatal("BL : Exception in Insert Method inside ProductDetails class", e);
             }
 
             if (status)
@@ -215,6 +250,10 @@ namespace RentalSystem.BL
                 return null;
         }
 
+        /// <summary>
+        /// Used to update product
+        /// </summary>
+        /// <param name="productModel">The ProductModel object as parameter</param>
         public ProductModel Update(ProductModel productModel)
         {
             Product product = new Product();
@@ -226,7 +265,7 @@ namespace RentalSystem.BL
             }
             catch (Exception e)
             {
-                throw e;
+                Log.Fatal("BL : Exception in Update Method inside ProductDetails class", e);
             }
 
             if (status)

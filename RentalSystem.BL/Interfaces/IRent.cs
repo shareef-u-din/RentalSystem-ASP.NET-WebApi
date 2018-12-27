@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RentalSystem.Models;
 
 namespace RentalSystem.BL.Interfaces
 {
@@ -30,5 +31,23 @@ namespace RentalSystem.BL.Interfaces
         /// </summary>
         /// <param name="productId">The product Id</param>
         int CheckDate(DateTime date, int productId,int value);
+
+        /// <summary>
+        /// Used to get all the new rent requests for given vendor
+        /// </summary>
+        /// <param name="productId">The Vendor Id, if not provided returns all Unapproved requests.</param>
+        IEnumerable<T> GetAllOnRentUnApproved(int vendorId);
+
+        /// <summary>
+        /// Used to approve the product on rent.
+        /// </summary>
+        /// <param name="productId">The product rent Id</param>
+        int Approve(int productId);
+
+        /// <summary>
+        /// Used to unapproved the products for customer.
+        /// </summary>
+        /// <param name="email">The unique email of customer</param>
+        IEnumerable<T> GetAllUnApproved(string email);
     }
 }

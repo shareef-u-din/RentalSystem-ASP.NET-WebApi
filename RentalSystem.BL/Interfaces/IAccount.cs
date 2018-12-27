@@ -44,9 +44,9 @@ namespace RentalSystem.BL.Interfaces
         UserModel GetUser(int id);
 
         /// <summary>
-        /// Used to retrieve user by Id
+        /// Used to update user details
         /// </summary>
-        /// <param name="Id">The Id of user</param>
+        /// <param name="userModel">The Id of user</param>
         UserModel UpdateUser(UserModel userModel);
 
         /// <summary>
