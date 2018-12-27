@@ -86,6 +86,7 @@ namespace RentalSystem.BL
             {
                 Log.Fatal("BL : Exception in GetAllCustomers Method inside AccountDetails class", e);
             }
+           
 
             return list;
         }

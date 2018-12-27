@@ -37,8 +37,14 @@ namespace RentalSystem.BL.Helper
             }
             catch (Exception e)
             {
-                string mes = "************API LOGS**************\n";
-                Log.Fatal(mes + " Exception in DataSetToProductList inside BL Helper ", e);
+                Log.Fatal("BL : Exception in DataSetToRentList inside BL Helper ", e);
+            }
+            finally
+            {
+                if (ds != null)
+                {
+                    ds = null;
+                }
             }
             return list;
         }
@@ -70,8 +76,14 @@ namespace RentalSystem.BL.Helper
             }
             catch (Exception e)
             {
-                string mes = "************API LOGS**************\n";
-                Log.Fatal(mes + " Exception in DataSetToRentList inside BL Helper ", e);
+                Log.Fatal( "BL : Exception in DataSetToRentList inside BL Helper ", e);
+            }
+            finally
+            {
+                if (ds != null)
+                {
+                    ds = null;
+                }
             }
             return list;
         }
@@ -101,8 +113,14 @@ namespace RentalSystem.BL.Helper
             }
             catch (Exception e)
             {
-                string mes = "************API LOGS**************\n";
-                Log.Fatal(mes + " Exception in DataSetToUserList inside BL Helper ", e);
+                Log.Fatal("BL : Exception in DataSetToUserList inside BL Helper ", e);
+            }
+            finally
+            {
+                if (ds != null)
+                {
+                    ds = null;
+                }
             }
             return list;
         }
@@ -126,8 +144,14 @@ namespace RentalSystem.BL.Helper
             }
             catch (Exception e)
             {
-                string mes = "************API LOGS**************\n";
-                Log.Fatal(mes + " Exception in DataSetToUserLogins inside BL Helper ", e);
+                Log.Fatal("BL : Exception in DataSetToUserLogins inside BL Helper ", e);
+            }
+            finally
+            {
+                if (ds != null)
+                {
+                    ds = null;
+                }
             }
             return list;
         }
@@ -150,8 +174,14 @@ namespace RentalSystem.BL.Helper
             }
             catch (Exception e)
             {
-                string mes = "************API LOGS**************\n";
-                Log.Fatal(mes + " Exception in DataSetToCategoryList inside BL Helper ", e);
+                Log.Fatal("BL : Exception in DataSetToCategoryList inside BL Helper ", e);
+            }
+            finally
+            {
+                if (ds != null)
+                {
+                    ds = null;
+                }
             }
             return list;
         }
